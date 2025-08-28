@@ -19,7 +19,7 @@ const connection = mysql.createPool({
   port: process.env.DB_PORT,
   waitForConnections: true,
  connectionLimit: 10,
- queueLimit: 0
+ queueLimit: 0,
 });
 
  console.log("Connecting to DB:", process.env.DB_DATABASE);
@@ -33,7 +33,9 @@ app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err)
+      console.error('Query Error:', err);
+       return res.status(500).json({ error: err.message });
     res.json(results);
   });
 });
