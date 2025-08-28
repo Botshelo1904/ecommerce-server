@@ -30,7 +30,7 @@ app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
     if (err)
       console.error('Query Error:', err);
-       return res.status(500).json({ error: err.message });
+       return res.status(500).json({ error: err?.message || "Unknown error" });
     res.json(results);
   });
 });
