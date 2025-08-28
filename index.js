@@ -28,7 +28,9 @@ app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
-    if (err) return res.status(500).json({ error: 'err.message' });
+    if (err)
+      console.error('MYSQL ERROR:', err);
+       return res.status(500).json({ error: 'err.message' });
     res.json(results);
   });
 });
