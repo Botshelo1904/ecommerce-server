@@ -24,11 +24,6 @@ const connection = mysql.createPool({
 
  console.log("Connecting to DB:", process.env.DB_DATABASE);
 
-connection.connect((err) => {
-  if (err) console.error('MySQL connection failed:', err);
-  else console.log('Connected to MySQL');
-});
-
 app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
