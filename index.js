@@ -11,12 +11,15 @@ app.use(express.json());
 
 console.log(process.env);
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
+  waitForConnections: true,
+ connectionLimit: 10,
+ queueLimit: 0
 });
 
  console.log("Connecting to DB:", process.env.DB_DATABASE);
@@ -30,9 +33,7 @@ app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
-    if (err)
-      console.error('MYSQL ERROR:', err);
-       return res.status(500).json({ error: err.message });
+    if (err) return res.status(500).json({ error: err.message });
     res.json(results);
   });
 });
