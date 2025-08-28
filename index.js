@@ -28,9 +28,11 @@ app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
-    if (err)
+    if (err) {
       console.error('Query Error:', err);
-       return res.status(500).json({ error: err?.message || "Unknown error" });
+      return res.status(500).json({ error: (err && err.message) || "Unknown error" });
+    }
+
     res.json(results);
   });
 });
