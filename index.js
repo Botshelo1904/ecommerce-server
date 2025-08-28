@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log(process.env);
+
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -26,7 +28,7 @@ app.get('/test', (req, res) => res.send('API is running...'));
 
 app.get('/api/products', (req, res) => {
   connection.query('SELECT * FROM products', (err, results) => {
-    if (err) return res.status(500).json({ error: 'Database error' });
+    if (err) return res.status(500).json({ error: 'err.message' });
     res.json(results);
   });
 });
